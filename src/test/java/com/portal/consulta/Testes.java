@@ -6,14 +6,10 @@
 package com.portal.consulta;
 
 import com.portal.consulta.model.PortalTransparencia;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 /**
  *
@@ -33,11 +29,11 @@ public class Testes {
         JSONObject json = new JSONObject(dados);
         String link = (String)json.getJSONArray("registros").getJSONObject(0).get("link");
         doc = Jsoup.connect("http://www.portaltransparencia.gov.br/"+link).userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36").get();
-        if(doc.select("div.box-tabela-completa").size() > 0){
-            Element tr = doc.selectFirst("div.box-tabela-completa > table > tbody > tr");
-            System.out.println(tr.getElementsByTag("td").get(0).text());
-            System.out.println(tr.getElementsByTag("td").get(1).text());
-            
+        if(doc.select("div#collapse-1 > div").size() > 0){
+            Element div = doc.selectFirst("div#collapse-1 > div");
+            System.out.println(div.getElementsByTag("strong").first().text());
+            System.out.println(div.getElementsByTag("span").get(0).text());
+             System.out.println(div.getElementsByTag("span").get(1).text());
 //            System.out.println(section.selectFirst("div > div:contains(Número de inscrição)").text());
         }else{
             System.out.println("Não tem");

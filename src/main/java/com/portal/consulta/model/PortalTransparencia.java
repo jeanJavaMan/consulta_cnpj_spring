@@ -24,12 +24,14 @@ public class PortalTransparencia {
     private String cnpj;
     private final PessoaJuridica pessoaJuridica;
     private final List<QuadroSocietario> lista_quadrosocietario;
+    private final RecursosRecebidos recursosRecebidos;
 
     public PortalTransparencia() {
         this.link_pagina_inicial = "http://www.portaltransparencia.gov.br/";
         this.link_busca_termo = "http://www.portaltransparencia.gov.br/busca/resultado?termo=";
         this.pessoaJuridica = new PessoaJuridica();
         this.lista_quadrosocietario = new ArrayList<>();
+        this.recursosRecebidos = new RecursosRecebidos();
     }
 
     public boolean buscarDados(String cnpj) throws Exception {
@@ -42,9 +44,19 @@ public class PortalTransparencia {
         if (this.doc.select("section.dados-tabelados").size() > 0) {
             this.pegar_dados_pessoa_juridica();
             this.pegar_quadro_societario();
+            this.pegar_recursosRecebidos();
             return true;
         } else {
             return false;
+        }
+    }
+
+    private void pegar_recursosRecebidos() {
+        if (doc.select("div#collapse-1 > div").size() > 0) {
+            Element div = doc.selectFirst("div#collapse-1 > div");
+            this.recursosRecebidos.setTexto(div.getElementsByTag("strong").first().text());
+            this.recursosRecebidos.setValores(div.getElementsByTag("span").get(0).text());
+            this.recursosRecebidos.setValores_sigilosos(div.getElementsByTag("span").get(1).text());
         }
     }
 
@@ -80,6 +92,5 @@ public class PortalTransparencia {
     public List<QuadroSocietario> getLista_quadrosocietario() {
         return lista_quadrosocietario;
     }
-        
 
 }
