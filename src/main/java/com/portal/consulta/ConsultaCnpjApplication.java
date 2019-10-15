@@ -1,6 +1,6 @@
-package com.jeanderson.consulta;
+package com.portal.consulta;
 
-import com.jeanderson.consulta.controller.IndexController;
+import com.portal.consulta.controller.IndexController;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

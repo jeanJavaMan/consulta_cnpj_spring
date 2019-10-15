@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jeanderson.consulta;
+package com.portal.consulta;
 
-import com.jeanderson.consulta.model.PortalTransparencia;
+import com.portal.consulta.model.PortalTransparencia;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;

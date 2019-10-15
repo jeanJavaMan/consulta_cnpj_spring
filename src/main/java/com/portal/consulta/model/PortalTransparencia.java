@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jeanderson.consulta.model;
+package com.portal.consulta.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,7 +80,6 @@ public class PortalTransparencia {
     public List<QuadroSocietario> getLista_quadrosocietario() {
         return lista_quadrosocietario;
     }
-    
-    
+        
 
 }
