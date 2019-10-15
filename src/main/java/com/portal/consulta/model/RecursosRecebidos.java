@@ -41,6 +41,11 @@ public class RecursosRecebidos {
     public void setValores_sigilosos(String valores_sigilosos) {
         this.valores_sigilosos = valores_sigilosos;
     }
+
+    @Override
+    public String toString() {
+        return "RecursosRecebidos{" + "texto=" + texto + ", valores=" + valores + ", valores_sigilosos=" + valores_sigilosos + '}';
+    }
     
     
     

@@ -27,6 +27,12 @@ public class QuadroSocietario {
     public void setQualificacao(String qualificacao) {
         this.qualificacao = qualificacao;
     }
+
+    @Override
+    public String toString() {
+        return "QuadroSocietario{" + "socio=" + socio + ", qualificacao=" + qualificacao + '}';
+    }
+    
     
     
 }

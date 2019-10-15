@@ -5,35 +5,56 @@
  */
 package com.portal.consulta.model;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 /**
  *
  * @author jeand
  */
 public class ProdutosServicos {
-     private final List<Map<String,String>> dados;
+    private String bens_patrimoniais, servicos,obras, materiais, outros;
 
-    public ProdutosServicos() {
-        this.dados = new ArrayList<>();
+    public String getBens_patrimoniais() {
+        return bens_patrimoniais;
+    }
+
+    public void setBens_patrimoniais(String bens_patrimoniais) {
+        this.bens_patrimoniais = bens_patrimoniais;
+    }
+
+    public String getServicos() {
+        return servicos;
+    }
+
+    public void setServicos(String servicos) {
+        this.servicos = servicos;
+    }
+
+    public String getObras() {
+        return obras;
+    }
+
+    public void setObras(String obras) {
+        this.obras = obras;
+    }
+
+    public String getMateriais() {
+        return materiais;
+    }
+
+    public void setMateriais(String materiais) {
+        this.materiais = materiais;
+    }
+
+    public String getOutros() {
+        return outros;
+    }
+
+    public void setOutros(String outros) {
+        this.outros = outros;
+    }
+
+    @Override
+    public String toString() {
+        return "ProdutosServicos{" + "bens_patrimoniais=" + bens_patrimoniais + ", servicos=" + servicos + ", obras=" + obras + ", materiais=" + materiais + ", outros=" + outros + '}';
     }
     
-    public void addDados(String texto, String descritivo){
-        Map<String,String> map_dados = new HashMap<>();
-        map_dados.put("texto", texto);
-        map_dados.put("descritivo", descritivo);
-        this.dados.add(map_dados);
-    }
-
-    public List<Map<String, String>> getDados() {
-        return dados;
-    }
-   
-    public boolean existe_dados(){
-        return this.dados.size() > 0;
-    }
-     
 }
