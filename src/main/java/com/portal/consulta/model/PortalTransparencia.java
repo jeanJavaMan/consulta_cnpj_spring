@@ -44,17 +44,17 @@ public class PortalTransparencia {
 
     public boolean buscarDados(String cnpj) throws Exception {
         this.cnpj = cnpj;
-        this.doc = Jsoup.connect(link_busca_termo + cnpj).userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36").ignoreContentType(true).get();
+        this.doc = Jsoup.connect(link_busca_termo + cnpj).userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36").timeout(60 * 1000).ignoreContentType(true).get();
         String json_resposta = doc.body().text();
         JSONObject json = new JSONObject(json_resposta);
         String link = (String) json.getJSONArray("registros").getJSONObject(0).get("link");
-        this.doc = Jsoup.connect(this.link_pagina_inicial + link).userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36").get();
+        this.doc = Jsoup.connect(this.link_pagina_inicial + link).userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36").timeout(60 * 1000).get();
         if (this.doc.select("section.dados-tabelados").size() > 0) {
             this.pegar_dados_pessoa_juridica();
             this.pegar_quadro_societario();
             this.pegar_recursosRecebidos();
             this.pegar_produtos_e_servicos();
-            this.pegar_licitacao();
+//            this.pegar_licitacao();
             return true;
         } else {
             return false;
@@ -63,7 +63,7 @@ public class PortalTransparencia {
 
     private void pegar_licitacao() throws IOException, JSONException {
         if (!this.id_resultado.isEmpty()) {
-            String json_resposta_licitacao = Jsoup.connect("http://www.portaltransparencia.gov.br/pessoa-juridica/" + this.id_resultado + "/participante-licitacao/resultado?paginacaoSimples=true&tamanhoPagina=15&offset=0&direcaoOrdenacao=desc&colunaOrdenacao=numeroLicitacao&colunasSelecionadas=linkDetalhamento%2Corgao%2CunidadeGestora%2CnumeroLicitacao%2CdataAbertura&id=" + this.id_resultado).ignoreContentType(true).get().body().text();
+            String json_resposta_licitacao = Jsoup.connect("http://www.portaltransparencia.gov.br/pessoa-juridica/" + this.id_resultado + "/participante-licitacao/resultado?paginacaoSimples=true&tamanhoPagina=15&offset=0&direcaoOrdenacao=desc&colunaOrdenacao=numeroLicitacao&colunasSelecionadas=linkDetalhamento%2Corgao%2CunidadeGestora%2CnumeroLicitacao%2CdataAbertura&id=" + this.id_resultado).ignoreContentType(true).timeout(60 * 1000).get().body().text();
             JSONObject json_licitacao = new JSONObject(json_resposta_licitacao);
             if (json_licitacao.getJSONArray("data").length() > 0) {
                 JSONArray jsonArray = json_licitacao.getJSONArray("data");
@@ -85,7 +85,7 @@ public class PortalTransparencia {
         if (this.doc.select("input#skModulo").size() > 0) {
             String id = doc.selectFirst("input#skModulo").val();
             this.id_resultado = id;
-            String json_resposta_produtos = Jsoup.connect("http://www.portaltransparencia.gov.br/pessoa-juridica/" + id + "/produtos-e-servicos").userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36").ignoreContentType(true).get().body().text();
+            String json_resposta_produtos = Jsoup.connect("http://www.portaltransparencia.gov.br/pessoa-juridica/" + id + "/produtos-e-servicos").userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36").ignoreContentType(true).timeout(60 * 1000).get().body().text();
             JSONObject json_produtos = new JSONObject(json_resposta_produtos);
             this.produtosServicos.setBens_patrimoniais(json_produtos.getString("valorBensPatrimoniais"));
             this.produtosServicos.setServicos(json_produtos.getString("valorServicos"));
