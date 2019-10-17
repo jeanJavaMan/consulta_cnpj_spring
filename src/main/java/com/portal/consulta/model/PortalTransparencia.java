@@ -54,7 +54,7 @@ public class PortalTransparencia {
             this.pegar_quadro_societario();
             this.pegar_recursosRecebidos();
             this.pegar_produtos_e_servicos();
-//            this.pegar_licitacao();
+            this.pegar_licitacao();
             return true;
         } else {
             return false;

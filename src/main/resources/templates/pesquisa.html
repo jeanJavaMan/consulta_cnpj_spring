@@ -129,5 +129,38 @@
                     </div>
                 </div>
             </div>
+            <div class="accordion" id="accordion5">
+                <div class="card">
+                    <div class="card-header" id="heading5">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse5" aria-expanded="false" aria-controls="collapse5">
+                                Participações em licitações
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="collapse5" class="collapse" aria-labelledby="heading5" data-parent="#accordion5">
+                        <div class="card-body">
+                           <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Órgão / entidade vinculada</th>
+                                        <th>Unidade gestora responsável</th>
+                                        <th>Número da Licitação</th>
+                                        <th>Data de abertura</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="licitacao : ${dados.lista_licitacao}">
+                                        <td th:text="${licitacao.orgao}"></td>
+                                        <td th:text="${licitacao.unidadeGestora}"></td>
+                                        <td th:text="${licitacao.numeroLicitacao}"></td>
+                                        <td th:text="${licitacao.dataAbertura}"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
     </body>
 </html>
