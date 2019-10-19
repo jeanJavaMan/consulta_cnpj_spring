@@ -5,7 +5,10 @@
  */
 package com.portal.consulta.controller;
 
+import com.portal.consulta.model.Licitacoes;
 import com.portal.consulta.model.PortalTransparencia;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -41,6 +44,20 @@ public class IndexController {
         } catch (Exception ex) {
             ex.printStackTrace();
             return new ModelAndView("index"); 
+        }
+    }
+    
+    @RequestMapping(value = "/licitacao", method = RequestMethod.GET)
+    public ModelAndView licitacao(@RequestParam("licitacao") String licitacao){
+        Licitacoes l = new Licitacoes(licitacao);
+        try {
+            l.carregar_dados();
+            ModelAndView mv = new ModelAndView("licitacao");
+            mv.addObject("licitacao", l);
+            return mv;
+        } catch (Exception ex) {
+            Logger.getLogger(IndexController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ModelAndView("index");
         }
     }
 }

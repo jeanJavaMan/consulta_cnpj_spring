@@ -1,0 +1,226 @@
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        <style>
+            .main {
+                width: 50%;
+                margin: 50px auto;
+            }
+
+            /* Bootstrap 4 text input with search icon */
+
+            .has-search .form-control {
+                padding-left: 2.375rem;
+            }
+
+            .has-search .form-control-feedback {
+                position: absolute;
+                z-index: 2;
+                display: block;
+                width: 2.375rem;
+                height: 2.375rem;
+                line-height: 2.375rem;
+                text-align: center;
+                pointer-events: none;
+                color: #aaa;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="main">
+            <div class="form-group">
+                <div class="form-group">
+                    <h1>Consulta Portal da Transparência</h1>
+                </div>
+                <div class="form-group">
+                    <form method="get" action="/pesquisa">
+                        <div class="input-group">
+                            <input type="text" name='pesquisa' class="form-control" placeholder="Digite o CNPJ para pesquisar">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="submit">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="content">
+                    <div class="accordion" id="accordion1">
+                        <div class="card">
+                            <div class="card-header" id="headingOne">
+                                <h2 class="mb-0">
+                                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        Detalhamento da Licitação
+                                    </button>
+                                </h2>
+                            </div>
+
+                            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion1">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-xs-12 col-sm-3">
+                                            <strong>Órgão superior</strong>
+                                            <span th:text="${licitacao.licitacao.getJSONObject('unidadeGestora').getJSONObject('orgaoMaximo').getString('codigo')} +' - '+ ${licitacao.licitacao.getJSONObject('unidadeGestora').getJSONObject('orgaoMaximo').getString('nome')}">
+                                            </span>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-3">
+                                            <strong>Órgão / entidade vinculada</strong>
+                                            <span th:text="${licitacao.licitacao.getJSONObject('unidadeGestora').getJSONObject('orgaoVinculado').getString('codigoSIAFI')} +' - '+ ${licitacao.licitacao.getJSONObject('unidadeGestora').getJSONObject('orgaoVinculado').getString('nome')}">
+                                            </span>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-3">
+                                            <strong>Unidade gestora responsável</strong>
+                                            <span th:text="${licitacao.licitacao.getJSONObject('unidadeGestora').getString('codigo')} +' - '+ ${licitacao.licitacao.getJSONObject('unidadeGestora').getString('nome')}">
+                                            </span>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-3">
+                                            <strong>Número da licitação</strong>
+                                            <span th:text="${licitacao.licitacao.getJSONObject('licitacao').getString('numero')}">
+                                            </span>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-3">
+                                            <strong>Modalidade</strong>
+                                            <span th:text="${licitacao.licitacao.getJSONObject('modalidadeLicitacao').getString('descricao')}">
+                                            </span>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-3">
+                                            <strong>Situação</strong>
+                                            <span th:text="${licitacao.licitacao.getJSONObject('situacaoCompra').getString('descricao')}">
+                                            </span>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-3">
+                                            <strong>Processo</strong>
+                                            <span th:text="${licitacao.licitacao.getJSONObject('licitacao').getString('numeroProcesso')}">
+                                            </span>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-3">
+                                            <strong>Valor da licitação</strong>
+                                            <span th:text="'R$ ' + ${#numbers.formatDecimal(licitacao.licitacao.get('valor'), 0, 'POINT', 2, 'COMMA')}">
+                                            </span>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-3">
+                                            <strong>Contato no órgão/entidade responsável</strong>
+                                            <span th:text="${licitacao.licitacao.getJSONObject('licitacao').getString('contatoResponsavel')}">
+                                            </span>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-3">
+                                            <strong>Objeto</strong>
+                                            <span th:text="${licitacao.licitacao.getJSONObject('licitacao').getString('objeto')}">
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                
+                        </div>
+                    </div>
+                    <div class="accordion" id="accordion2">
+                        <div class="card">
+                            <div class="card-header" id="headingTwo">
+                                <h2 class="mb-0">
+                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                        Itens licitados
+                                    </button>
+                                </h2>
+                            </div>
+                            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion2">
+                                <div class="card-body">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Descrição</th>
+                                                <th>Quantidade</th>
+                                                <th>Valor</th>
+                                                <th>CPF/CNPJ VENCEDOR</th>
+                                                <th>NOME / RAZÃO SOCIAL</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr th:each="json : ${licitacao.itens}">
+                                                <td th:text="${json.get('descricao')}"></td>
+                                                <td th:text="${json.get('quantidade')}"></td>
+                                                <td th:text="${json.get('valor')}"></td>
+                                                <td th:text="${json.get('cpfCnpjVencedor')}"></td>
+                                                <td th:text="${json.get('nome')}"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion" id="accordion3">
+                        <div class="card">
+                            <div class="card-header" id="heading3">
+                                <h2 class="mb-0">
+                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse3" aria-expanded="false" aria-controls="collapse3">
+                                        Participantes da licitação
+                                    </button>
+                                </h2>
+                            </div>
+                            <div id="collapse3" class="collapse" aria-labelledby="heading3" data-parent="#accordion3">
+                                <div class="card-body">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>CNPJ/CPF</th>
+                                                <th>Nome/Razão Social</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr th:each="json : ${licitacao.participantes}">
+                                                <td th:text="${json.get('cpfCnpj')}"></td>
+                                                <td th:text="${json.get('nome')}"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion" id="accordion4">
+                        <div class="card">
+                            <div class="card-header" id="heading4">
+                                <h2 class="mb-0">
+                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse4" aria-expanded="false" aria-controls="collapse4"> 
+                                        Empenhos e documentos relacionados
+                                    </button>
+                                </h2>
+                            </div>
+                            <div id="collapse4" class="collapse" aria-labelledby="heading4" data-parent="#accordion4">
+                                <div class="card-body">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>NÚMERO DO DOCUMENTO</th>
+                                                <th>DATA DE EMISSÃO</th>
+                                                <th>OBSERVAÇÃO</th>
+                                                <th>VALOR (R$)</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr th:each="json : ${licitacao.empenhos}">
+                                                <td th:text="${json.get('empenhoResumido')}"></td>
+                                                <td th:text="${json.get('dataEmissao')}"></td>
+                                                <td th:text="${json.get('observacao')}"></td>
+                                                <td th:text="${json.get('valor')}"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

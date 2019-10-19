@@ -7,157 +7,205 @@
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        <style>
+            .main {
+                width: 50%;
+                margin: 50px auto;
+            }
+
+            /* Bootstrap 4 text input with search icon */
+
+            .has-search .form-control {
+                padding-left: 2.375rem;
+            }
+
+            .has-search .form-control-feedback {
+                position: absolute;
+                z-index: 2;
+                display: block;
+                width: 2.375rem;
+                height: 2.375rem;
+                line-height: 2.375rem;
+                text-align: center;
+                pointer-events: none;
+                color: #aaa;
+            }
+        </style>
     </head>
     <body>
-        <div class="accordion" id="accordion1">
-            <div class="card">
-                <div class="card-header" id="headingOne">
-                    <h2 class="mb-0">
-                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                            Pessoa Jurídica
-                        </button>
-                    </h2>
+        <div class="main">
+            <div class="form-group">
+                <div class="form-group">
+                    <h1>Consulta Portal da Transparência</h1>
                 </div>
+                <div class="form-group">
+                    <form method="get" action="/pesquisa">
+                        <div class="input-group">
+                            <input type="text" name='pesquisa' class="form-control" placeholder="Digite o CNPJ para pesquisar">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="submit">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="accordion" id="accordion1">
+                    <div class="card">
+                        <div class="card-header" id="headingOne">
+                            <h2 class="mb-0">
+                                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    Pessoa Jurídica
+                                </button>
+                            </h2>
+                        </div>
 
-                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion1">
-                    <div class="card-body">
-                        <div class="row">
-                            <div th:each="map : ${dados.pessoaJuridica.dados}" class="col-xs-12 col-sm-3">
-                                <strong th:text="${map.texto}"></strong>
-                                <span th:text="${map.descritivo}">
-                                </span>
+                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion1">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div th:each="map : ${dados.pessoaJuridica.dados}" class="col-xs-12 col-sm-3">
+                                        <strong th:text="${map.texto}"></strong>
+                                        <span th:text="${map.descritivo}">
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                
+                    </div>
+                    <div class="accordion" id="accordion2">
+                        <div class="card">
+                            <div class="card-header" id="headingTwo">
+                                <h2 class="mb-0">
+                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                        Quadro societário
+                                    </button>
+                                </h2>
+                            </div>
+                            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion2">
+                                <div class="card-body">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>SÓCIO</th>
+                                                <th>QUALIFICAÇÃO DO SÓCIO</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr th:each="quadro : ${dados.lista_quadrosocietario}">
+                                                <td th:text="${quadro.socio}"></td>
+                                                <td th:text="${quadro.qualificacao}"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>                
-            </div>
-            <div class="accordion" id="accordion2">
-                <div class="card">
-                    <div class="card-header" id="headingTwo">
-                        <h2 class="mb-0">
-                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                Quadro societário
-                            </button>
-                        </h2>
-                    </div>
-                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion2">
-                        <div class="card-body">
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>SÓCIO</th>
-                                        <th>QUALIFICAÇÃO DO SÓCIO</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr th:each="quadro : ${dados.lista_quadrosocietario}">
-                                        <td th:text="${quadro.socio}"></td>
-                                        <td th:text="${quadro.qualificacao}"></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="accordion" id="accordion3">
-                <div class="card">
-                    <div class="card-header" id="heading3">
-                        <h2 class="mb-0">
-                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse3" aria-expanded="false" aria-controls="collapse3">
-                                Recursos Recebidos
-                            </button>
-                        </h2>
-                    </div>
-                    <div id="collapse3" class="collapse" aria-labelledby="heading3" data-parent="#accordion3">
-                        <div class="card-body">
-                            <strong th:text="${dados.recursosRecebidos.texto}"></strong>
-                            <div class="col-xs-12 col-sm-6">
-                                <p th:text="${dados.recursosRecebidos.valores}"></p>
+                    <div class="accordion" id="accordion3">
+                        <div class="card">
+                            <div class="card-header" id="heading3">
+                                <h2 class="mb-0">
+                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse3" aria-expanded="false" aria-controls="collapse3">
+                                        Recursos Recebidos
+                                    </button>
+                                </h2>
                             </div>
-                            <div class="col-xs-12 col-sm-6">
-                                <p th:text="${dados.recursosRecebidos.valores_sigilosos}"></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="accordion" id="accordion4">
-                <div class="card">
-                    <div class="card-header" id="heading4">
-                        <h2 class="mb-0">
-                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse4" aria-expanded="false" aria-controls="collapse4">
-                                Produtos e serviços fornecidos
-                            </button>
-                        </h2>
-                    </div>
-                    <div id="collapse4" class="collapse" aria-labelledby="heading4" data-parent="#accordion4">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-xs-12 col-sm-6">
-                                    <div class="form-group">
-                                        <strong>Bens patrimoniais</strong>
-                                        <span th:text="${dados.produtosServicos.bens_patrimoniais}"></span>
+                            <div id="collapse3" class="collapse" aria-labelledby="heading3" data-parent="#accordion3">
+                                <div class="card-body">
+                                    <strong th:text="${dados.recursosRecebidos.texto}"></strong>
+                                    <div class="col-xs-12 col-sm-6">
+                                        <p th:text="${dados.recursosRecebidos.valores}"></p>
                                     </div>
-                                </div>
-                                <div class="col-xs-12 col-sm-6">
-                                    <div class="form-group">
-                                        <strong>Serviços</strong>
-                                        <span th:text="${dados.produtosServicos.servicos}"></span>
-                                    </div>
-                                </div>
-                                <div class="col-xs-12 col-sm-6">
-                                    <div class="form-group">
-                                        <strong>Obras</strong>
-                                        <span th:text="${dados.produtosServicos.obras}"></span>
-                                    </div>
-                                </div>
-                                <div class="col-xs-12 col-sm-6">
-                                    <div class="form-group">
-                                        <strong>Materiais</strong>
-                                        <span th:text="${dados.produtosServicos.materiais}"></span>
-                                    </div>
-                                </div>
-                                <div class="col-xs-12 col-sm-6">
-                                    <div class="form-group">
-                                        <strong>Outros</strong>
-                                        <span th:text="${dados.produtosServicos.outros}"></span>
+                                    <div class="col-xs-12 col-sm-6">
+                                        <p th:text="${dados.recursosRecebidos.valores_sigilosos}"></p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="accordion" id="accordion5">
-                <div class="card">
-                    <div class="card-header" id="heading5">
-                        <h2 class="mb-0">
-                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse5" aria-expanded="false" aria-controls="collapse5">
-                                Participações em licitações
-                            </button>
-                        </h2>
+                    <div class="accordion" id="accordion4">
+                        <div class="card">
+                            <div class="card-header" id="heading4">
+                                <h2 class="mb-0">
+                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse4" aria-expanded="false" aria-controls="collapse4">
+                                        Produtos e serviços fornecidos
+                                    </button>
+                                </h2>
+                            </div>
+                            <div id="collapse4" class="collapse" aria-labelledby="heading4" data-parent="#accordion4">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-xs-12 col-sm-6">
+                                            <div class="form-group">
+                                                <strong>Bens patrimoniais</strong>
+                                                <span th:text="${dados.produtosServicos.bens_patrimoniais}"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-6">
+                                            <div class="form-group">
+                                                <strong>Serviços</strong>
+                                                <span th:text="${dados.produtosServicos.servicos}"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-6">
+                                            <div class="form-group">
+                                                <strong>Obras</strong>
+                                                <span th:text="${dados.produtosServicos.obras}"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-6">
+                                            <div class="form-group">
+                                                <strong>Materiais</strong>
+                                                <span th:text="${dados.produtosServicos.materiais}"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-6">
+                                            <div class="form-group">
+                                                <strong>Outros</strong>
+                                                <span th:text="${dados.produtosServicos.outros}"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div id="collapse5" class="collapse" aria-labelledby="heading5" data-parent="#accordion5">
-                        <div class="card-body">
-                           <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>Órgão / entidade vinculada</th>
-                                        <th>Unidade gestora responsável</th>
-                                        <th>Número da Licitação</th>
-                                        <th>Data de abertura</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr th:each="licitacao : ${dados.lista_licitacao}">
-                                        <td th:text="${licitacao.orgao}"></td>
-                                        <td th:text="${licitacao.unidadeGestora}"></td>
-                                        <td th:text="${licitacao.numeroLicitacao}"></td>
-                                        <td th:text="${licitacao.dataAbertura}"></td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                    <div class="accordion" id="accordion5">
+                        <div class="card">
+                            <div class="card-header" id="heading5">
+                                <h2 class="mb-0">
+                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse5" aria-expanded="false" aria-controls="collapse5">
+                                        Participações em licitações
+                                    </button>
+                                </h2>
+                            </div>
+                            <div id="collapse5" class="collapse" aria-labelledby="heading5" data-parent="#accordion5">
+                                <div class="card-body">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Detalhar</th>
+                                                <th>Órgão / entidade vinculada</th>
+                                                <th>Unidade gestora responsável</th>
+                                                <th>Número da Licitação</th>
+                                                <th>Data de abertura</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr th:each="licitacao : ${dados.lista_licitacao}">
+                                                <td><a th:text="${licitacao.skLicitacao}" th:href="@{/licitacao(licitacao=${licitacao.skLicitacao})}"></a></td>
+                                                <td th:text="${licitacao.orgao}"></td>
+                                                <td th:text="${licitacao.unidadeGestora}"></td>
+                                                <td th:text="${licitacao.numeroLicitacao}"></td>
+                                                <td th:text="${licitacao.dataAbertura}"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

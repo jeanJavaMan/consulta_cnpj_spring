@@ -63,7 +63,7 @@ public class PortalTransparencia {
 
     private void pegar_licitacao() throws IOException, JSONException {
         if (!this.id_resultado.isEmpty()) {
-            String json_resposta_licitacao = Jsoup.connect("http://www.portaltransparencia.gov.br/pessoa-juridica/" + this.id_resultado + "/participante-licitacao/resultado?paginacaoSimples=true&tamanhoPagina=15&offset=0&direcaoOrdenacao=desc&colunaOrdenacao=numeroLicitacao&colunasSelecionadas=linkDetalhamento%2Corgao%2CunidadeGestora%2CnumeroLicitacao%2CdataAbertura&id=" + this.id_resultado).ignoreContentType(true).timeout(60 * 1000).get().body().text();
+            String json_resposta_licitacao = Jsoup.connect("http://www.portaltransparencia.gov.br/pessoa-juridica/"+this.id_resultado+"/participante-licitacao/resultado?paginacaoSimples=false&tamanhoPagina=200&direcaoOrdenacao=desc&colunasSelecionadas=linkDetalhamento%2Corgao%2CunidadeGestora%2CnumeroLicitacao%2CdataAbertura&id=" + this.id_resultado).ignoreContentType(true).timeout(60 * 1000).get().body().text();
             JSONObject json_licitacao = new JSONObject(json_resposta_licitacao);
             if (json_licitacao.getJSONArray("data").length() > 0) {
                 JSONArray jsonArray = json_licitacao.getJSONArray("data");
