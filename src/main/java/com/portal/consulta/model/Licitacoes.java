@@ -44,9 +44,10 @@ public class Licitacoes {
     public void carregar_dados() throws Exception {
         this.pegar_licitacao();
         this.pegar_codigo_compra();
-        this.pegar_itens();
-        this.pegar_participantes();
-        this.pegar_empenho();
+        //não será necessário mais
+      //  this.pegar_itens();
+      //  this.pegar_participantes();
+       // this.pegar_empenho();
     }
 
     private void pegar_licitacao() throws Exception {
@@ -125,6 +126,11 @@ public class Licitacoes {
     public List<JSONObject> getEmpenhos() {
         return empenhos;
     }
+
+    public String getCodigo_compra() {
+        return codigo_compra;
+    }
+    
     
     
 

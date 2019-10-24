@@ -8,6 +8,12 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
         <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.3.1.js"></script>        
+        <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
+
         <style>
             .main {
                 width: 50%;
@@ -31,6 +37,12 @@
                 pointer-events: none;
                 color: #aaa;
             }
+            .accordion-color{
+                background-color: #0099ff !important;
+            }
+            .accordion-color > h2{
+                font-size: 1rem !important;
+            }
         </style>
     </head>
     <body>
@@ -53,13 +65,14 @@
                 </div>
             </div>
             <div class="form-group">
+                <h3>Pessoa Jurídica</h3>
+            </div>
+            <div class="form-group">
                 <div class="accordion" id="accordion1">
                     <div class="card">
-                        <div class="card-header" id="headingOne">
+                        <div style="cursor: pointer;" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" class="card-header accordion-color" id="headingOne">
                             <h2 class="mb-0">
-                                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                    Pessoa Jurídica
-                                </button>
+                                Pessoa Jurídica
                             </h2>
                         </div>
 
@@ -77,11 +90,9 @@
                     </div>
                     <div class="accordion" id="accordion2">
                         <div class="card">
-                            <div class="card-header" id="headingTwo">
+                            <div style="cursor: pointer;" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" class="card-header accordion-color" id="headingTwo">
                                 <h2 class="mb-0">
-                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                        Quadro societário
-                                    </button>
+                                    Quadro societário
                                 </h2>
                             </div>
                             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion2">
@@ -106,11 +117,9 @@
                     </div>
                     <div class="accordion" id="accordion3">
                         <div class="card">
-                            <div class="card-header" id="heading3">
+                            <div style="cursor: pointer;" data-toggle="collapse" data-target="#collapse3" aria-expanded="false" aria-controls="collapse3" class="card-header accordion-color" id="heading3">
                                 <h2 class="mb-0">
-                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse3" aria-expanded="false" aria-controls="collapse3">
-                                        Recursos Recebidos
-                                    </button>
+                                    Recursos Recebidos
                                 </h2>
                             </div>
                             <div id="collapse3" class="collapse" aria-labelledby="heading3" data-parent="#accordion3">
@@ -128,11 +137,9 @@
                     </div>
                     <div class="accordion" id="accordion4">
                         <div class="card">
-                            <div class="card-header" id="heading4">
+                            <div style="cursor: pointer;" data-toggle="collapse" data-target="#collapse4" aria-expanded="false" aria-controls="collapse4" class="card-header accordion-color" id="heading4">
                                 <h2 class="mb-0">
-                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse4" aria-expanded="false" aria-controls="collapse4">
-                                        Produtos e serviços fornecidos
-                                    </button>
+                                    Produtos e serviços fornecidos
                                 </h2>
                             </div>
                             <div id="collapse4" class="collapse" aria-labelledby="heading4" data-parent="#accordion4">
@@ -175,16 +182,14 @@
                     </div>
                     <div class="accordion" id="accordion5">
                         <div class="card">
-                            <div class="card-header" id="heading5">
+                            <div style="cursor: pointer;" data-toggle="collapse" data-target="#collapse5" aria-expanded="false" aria-controls="collapse5" class="card-header accordion-color" id="heading5">
                                 <h2 class="mb-0">
-                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse5" aria-expanded="false" aria-controls="collapse5">
-                                        Participações em licitações
-                                    </button>
+                                    Participações em licitações
                                 </h2>
                             </div>
                             <div id="collapse5" class="collapse" aria-labelledby="heading5" data-parent="#accordion5">
                                 <div class="card-body">
-                                    <table class="table table-bordered">
+                                    <table id="table-licitacao" class="table table-bordered">
                                         <thead>
                                             <tr>
                                                 <th>Detalhar</th>
@@ -194,15 +199,6 @@
                                                 <th>Data de abertura</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            <tr th:each="licitacao : ${dados.lista_licitacao}">
-                                                <td><a th:text="${licitacao.skLicitacao}" th:href="@{/licitacao(licitacao=${licitacao.skLicitacao})}"></a></td>
-                                                <td th:text="${licitacao.orgao}"></td>
-                                                <td th:text="${licitacao.unidadeGestora}"></td>
-                                                <td th:text="${licitacao.numeroLicitacao}"></td>
-                                                <td th:text="${licitacao.dataAbertura}"></td>
-                                            </tr>
-                                        </tbody>
                                     </table>
                                 </div>
                             </div>
@@ -210,5 +206,41 @@
                     </div>
                 </div>
             </div>
+            <script>
+                $(document).ready(function () {
+                $('#table-licitacao').DataTable({
+                'processing': true,
+                        'serverSide': true,
+                        'serverMethod': 'get',
+                        'searching': false,
+                        'ajax': {
+                        'url': '/licitacoes',
+                                dataType: "json",
+                                "data": function(data){
+                                data.id = [[${dados.id_resultado}]];
+                                }
+                        },
+                        "columnDefs": [
+                        {
+                        "render": function (data, type, row) {
+                        return "<a href='/licitacao?licitacao="+data+"'>"+data+"</a>";
+                        },
+                                "targets": 0
+                        }
+                        ]
+                        ,
+                        'columns': [
+                        {data: 'skLicitacao'},
+                        {data: 'orgao'},
+                        {data: 'unidadeGestora'},
+                        {data: 'numeroLicitacao'},
+                        {data: 'dataAbertura'},
+                        ],
+                        "language": {
+                        "url": "http://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
+                        }
+                });
+                });
+            </script>
     </body>
 </html>

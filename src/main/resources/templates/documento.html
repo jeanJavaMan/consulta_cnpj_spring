@@ -1,0 +1,206 @@
+
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.3.1.js"></script>        
+        <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
+        <link rel="stylesheet" href="/myStyle.css">
+    </head>
+    <body>
+        <div class="main">
+            <div class="form-group">
+                <div class="form-group">
+                    <h1>Consulta Portal da Transparência</h1>
+                </div>
+                <div class="form-group">
+                    <form method="get" action="/pesquisa">
+                        <div class="input-group">
+                            <input type="text" name='pesquisa' class="form-control" placeholder="Digite o CNPJ para pesquisar">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="submit">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="form-group">
+                <h3>Detalhamento do documento de Empenho</h3>
+            </div>
+            <div class="form-group">                
+                <div class="accordion" id="accordion1">
+                    <div class="card">
+                        <div style="cursor: pointer;" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" class="card-header accordion-color" id="headingOne">
+                            <h2 class="mb-0">
+                                Detalhamento do documento de Empenho
+                            </h2>
+                        </div>
+                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion1">
+                            <div class="card-body">
+                                <div th:utext="${doc.detalhamento}"></div>
+                            </div>
+                        </div>                
+                    </div>
+                </div>
+                <div class="accordion" id="accordion2">
+                    <div class="card">
+                        <div class="card-header accordion-color" id="headingTwo" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            <h2 class="mb-0">                                        
+                                Dados do Favorecido
+                            </h2>
+                        </div>
+                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion2">
+                            <div class="card-body">
+                                <div th:utext="${doc.dados_favorecido}"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion" id="accordion3">
+                    <div class="card">
+                        <div class="card-header accordion-color" id="heading3" data-toggle="collapse" data-target="#collapse3" aria-expanded="false" aria-controls="collapse3">
+                            <h2 class="mb-0">                                        
+                                Dados do Órgão emitente
+                            </h2>
+                        </div>
+                        <div id="collapse3" class="collapse" aria-labelledby="heading3" data-parent="#accordion3">
+                            <div class="card-body">
+                                <div th:utext="${doc.orgao_emitente}"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion" id="accordion4">
+                    <div class="card">
+                        <div class="card-header accordion-color" id="heading4" data-toggle="collapse" data-target="#collapse4" aria-expanded="false" aria-controls="collapse4">
+                            <h2 class="mb-0">                                        
+                                Dados detalhados do empenho
+                            </h2>
+                        </div>
+                        <div id="collapse4" class="collapse" aria-labelledby="heading4" data-parent="#accordion4">
+                            <div class="card-body">
+                                <div th:utext="${doc.dados_detalhados}"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion" id="accordion5">
+                    <div class="card">
+                        <div class="card-header accordion-color" id="heading5" data-toggle="collapse" data-target="#collapse5" aria-expanded="false" aria-controls="collapse5">
+                            <h2 class="mb-0">
+                                Detalhamento do Gasto
+                            </h2>
+                        </div>
+                        <div id="collapse5" class="collapse" aria-labelledby="heading5" data-parent="#accordion5">
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <a class="btn btn-primary" href="http://www.portaltransparencia.gov.br/despesas/documento/empenho/detalhamento/baixar?direcaoOrdenacao=asc&codigo=[[${doc.codigo_empenho}]]">Baixar arquivo CSV</a>
+                                </div>
+                                <div class="form-group">
+                                    <table id="table-detalhamento" class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>SUBITEM</th>
+                                                <th>QUANTIDADE</th>
+                                                <th>VALOR UNITÁRIO</th>
+                                                <th>VALOR TOTAL</th>
+                                                <th>DESCRIÇÃO</th>
+                                            </tr>
+                                        </thead>
+                                    </table> 
+                                </div>                                   
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion" id="accordion6">
+                    <div class="card">
+                        <div class="card-header accordion-color" id="heading6" data-toggle="collapse" data-target="#collapse6" aria-expanded="false" aria-controls="collapse6">
+                            <h2 class="mb-0">
+                                Documentos relacionados
+                            </h2>
+                        </div>
+                        <div id="collapse6" class="collapse" aria-labelledby="heading6" data-parent="#accordion6">
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <a class="btn btn-primary" href="http://www.portaltransparencia.gov.br/despesas/documento/documentos-relacionados/baixar?direcaoOrdenacao=asc&codigo=[[${doc.codigo_empenho}]]&fase=Empenho">Baixar arquivo CSV</a>
+                                </div>
+                                <div class="form-group">
+                                    <table id="table-relacionados" class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>DATA</th>
+                                                <th>FASE</th>
+                                                <th>DOCUMENTO RESUMIDO</th>
+                                                <th>ESPÉCIE</th>
+                                            </tr>
+                                        </thead>
+                                    </table> 
+                                </div>                                   
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            $(document).ready(function () {
+                $('#table-detalhamento').DataTable({
+                    'processing': true,
+                    'serverSide': true,
+                    'serverMethod': 'get',
+                    'searching': false,
+                    'ajax': {
+                        'url': '/licitacao/documento/detalhamento',
+                        dataType: "json",
+                        "data": function (data) {
+                            data.id = "[[${doc.codigo_empenho}]]";
+                        }
+                    },
+                    'columns': [
+                        {data: 'subitem'},
+                        {data: 'quantidade'},
+                        {data: 'valorUnitario'},
+                        {data: 'valorTotal'},
+                        {data: 'descricao'},
+                    ],
+                    "language": {
+                        "url": "http://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
+                    }
+                });
+                $('#table-relacionados').DataTable({
+                    'processing': true,
+                    'serverSide': true,
+                    'serverMethod': 'get',
+                    'searching': false,
+                    'ajax': {
+                        'url': '/licitacao/documento/relacionados',
+                        dataType: "json",
+                        "data": function (data) {
+                            data.id = "[[${doc.codigo_empenho}]]";
+                        }
+                    },
+                    'columns': [
+                        {data: 'data'},
+                        {data: 'fase'},
+                        {data: 'documentoResumido'},
+                        {data: 'especie'},
+                    ],
+                    "language": {
+                        "url": "http://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>

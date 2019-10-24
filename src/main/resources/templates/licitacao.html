@@ -8,6 +8,9 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
         <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.3.1.js"></script>        
+        <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
         <style>
             .main {
                 width: 50%;
@@ -31,6 +34,13 @@
                 pointer-events: none;
                 color: #aaa;
             }
+            .accordion-color{
+                background-color: #0099ff !important;
+                cursor: pointer;
+            }
+            .accordion-color > h2{
+                font-size: 1rem !important;
+            }
         </style>
     </head>
     <body>
@@ -53,14 +63,15 @@
                 </div>
             </div>
             <div class="form-group">
+                <h3>Detalhamento da Licitação</h3>
+            </div>
+            <div class="form-group">
                 <div class="content">
                     <div class="accordion" id="accordion1">
                         <div class="card">
-                            <div class="card-header" id="headingOne">
+                            <div class="card-header accordion-color" id="headingOne" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                                 <h2 class="mb-0">
-                                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                        Detalhamento da Licitação
-                                    </button>
+                                    Detalhamento da Licitação
                                 </h2>
                             </div>
 
@@ -124,16 +135,14 @@
                     </div>
                     <div class="accordion" id="accordion2">
                         <div class="card">
-                            <div class="card-header" id="headingTwo">
+                            <div class="card-header accordion-color" id="headingTwo" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                                 <h2 class="mb-0">
-                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                        Itens licitados
-                                    </button>
+                                    Itens licitados
                                 </h2>
                             </div>
                             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion2">
                                 <div class="card-body">
-                                    <table class="table table-bordered">
+                                    <table id="table-itens" class="table table-bordered">
                                         <thead>
                                             <tr>
                                                 <th>Descrição</th>
@@ -143,15 +152,6 @@
                                                 <th>NOME / RAZÃO SOCIAL</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            <tr th:each="json : ${licitacao.itens}">
-                                                <td th:text="${json.get('descricao')}"></td>
-                                                <td th:text="${json.get('quantidade')}"></td>
-                                                <td th:text="${json.get('valor')}"></td>
-                                                <td th:text="${json.get('cpfCnpjVencedor')}"></td>
-                                                <td th:text="${json.get('nome')}"></td>
-                                            </tr>
-                                        </tbody>
                                     </table>
                                 </div>
                             </div>
@@ -159,28 +159,20 @@
                     </div>
                     <div class="accordion" id="accordion3">
                         <div class="card">
-                            <div class="card-header" id="heading3">
+                            <div class="card-header accordion-color" id="heading3" data-toggle="collapse" data-target="#collapse3" aria-expanded="false" aria-controls="collapse3">
                                 <h2 class="mb-0">
-                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse3" aria-expanded="false" aria-controls="collapse3">
-                                        Participantes da licitação
-                                    </button>
+                                    Participantes da licitação
                                 </h2>
                             </div>
                             <div id="collapse3" class="collapse" aria-labelledby="heading3" data-parent="#accordion3">
                                 <div class="card-body">
-                                    <table class="table table-bordered">
+                                    <table id="table-participantes" class="table table-bordered">
                                         <thead>
                                             <tr>
                                                 <th>CNPJ/CPF</th>
                                                 <th>Nome/Razão Social</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            <tr th:each="json : ${licitacao.participantes}">
-                                                <td th:text="${json.get('cpfCnpj')}"></td>
-                                                <td th:text="${json.get('nome')}"></td>
-                                            </tr>
-                                        </tbody>
                                     </table>
                                 </div>
                             </div>
@@ -188,16 +180,14 @@
                     </div>
                     <div class="accordion" id="accordion4">
                         <div class="card">
-                            <div class="card-header" id="heading4">
+                            <div class="card-header accordion-color" id="heading4" data-toggle="collapse" data-target="#collapse4" aria-expanded="false" aria-controls="collapse4">
                                 <h2 class="mb-0">
-                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse4" aria-expanded="false" aria-controls="collapse4"> 
-                                        Empenhos e documentos relacionados
-                                    </button>
+                                    Empenhos e documentos relacionados
                                 </h2>
                             </div>
                             <div id="collapse4" class="collapse" aria-labelledby="heading4" data-parent="#accordion4">
                                 <div class="card-body">
-                                    <table class="table table-bordered">
+                                    <table id="table-empenho" class="table table-bordered">
                                         <thead>
                                             <tr>
                                                 <th>NÚMERO DO DOCUMENTO</th>
@@ -206,14 +196,6 @@
                                                 <th>VALOR (R$)</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            <tr th:each="json : ${licitacao.empenhos}">
-                                                <td th:text="${json.get('empenhoResumido')}"></td>
-                                                <td th:text="${json.get('dataEmissao')}"></td>
-                                                <td th:text="${json.get('observacao')}"></td>
-                                                <td th:text="${json.get('valor')}"></td>
-                                            </tr>
-                                        </tbody>
                                     </table>
                                 </div>
                             </div>
@@ -222,5 +204,101 @@
                 </div>
             </div>
         </div>
+        <script>
+            $(document).ready(function () {
+            $('#table-itens').DataTable({
+            'processing': true,
+                    'serverSide': true,
+                    'serverMethod': 'get',
+                    'searching': false,
+                    'ajax': {
+                    'url': '/licitacao/itens',
+                            dataType: "json",
+                            "data": function(data){
+                            data.id_compra = [[${licitacao.codigo_compra}]];
+                            }
+                    },
+                    "columnDefs": [
+                    {
+                    "render": function (data, type, row) {
+                    return "<a href='/pesquisa?pesquisa=" + data + "'>" + data + "</a>";
+                    },
+                            "targets": 3
+                    }
+                    ]
+                    ,
+                    'columns': [
+                    {data: 'descricao'},
+                    {data: 'quantidade'},
+                    {data: 'valor'},
+                    {data: 'cpfCnpjVencedor'},
+                    {data: 'nome'},
+                    ],
+                    "language": {
+                    "url": "http://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
+                    }
+            });
+            $('#table-participantes').DataTable({
+            'processing': true,
+                    'serverSide': true,
+                    'serverMethod': 'get',
+                    'searching': false,
+                    'ajax': {
+                    'url': '/licitacao/participantes',
+                            dataType: "json",
+                            "data": function(data){
+                            data.id_compra = [[${licitacao.codigo_compra}]];
+                            }
+                    },
+                    "columnDefs": [
+                    {
+                    "render": function (data, type, row) {
+                    return "<a href='/pesquisa?pesquisa=" + data + "'>" + data + "</a>";
+                    },
+                            "targets": 0
+                    }
+                    ]
+                    ,
+                    'columns': [
+                    {data: 'cpfCnpj'},
+                    {data: 'nome'},
+                    ],
+                    "language": {
+                    "url": "http://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
+                    }
+            });
+            $('#table-empenho').DataTable({
+            'processing': true,
+                    'serverSide': true,
+                    'serverMethod': 'get',
+                    'searching': false,
+                    'ajax': {
+                    'url': '/licitacao/empenho',
+                            dataType: "json",
+                            "data": function(data){
+                            data.id_compra = [[${licitacao.codigo_compra}]];
+                            }
+                    },
+                    "columnDefs": [
+                    {
+                    "render": function (data, type, row) {                        
+                    return "<a href='/licitacao/documento?doc="+row.empenho+"'>" + data + "</a>";
+                    },
+                            "targets": 0
+                    }
+                    ]
+                    ,
+                    'columns': [
+                    {data: 'empenhoResumido'},
+                    {data: 'dataEmissao'},
+                    {data: 'observacao'},
+                    {data: 'valor'},
+                    ],
+                    "language": {
+                    "url": "http://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
+                    },
+            });
+            });
+        </script>
     </body>
 </html>

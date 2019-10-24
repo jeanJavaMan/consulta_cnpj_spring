@@ -54,7 +54,7 @@ public class PortalTransparencia {
             this.pegar_quadro_societario();
             this.pegar_recursosRecebidos();
             this.pegar_produtos_e_servicos();
-            this.pegar_licitacao();
+           // this.pegar_licitacao();
             return true;
         } else {
             return false;
@@ -148,6 +148,12 @@ public class PortalTransparencia {
     public List<ParticipacaoLicitacao> getLista_licitacao() {
         return lista_licitacao;
     }
+
+    public String getId_resultado() {
+        return id_resultado;
+    }
+    
+    
 
     @Override
     public String toString() {
