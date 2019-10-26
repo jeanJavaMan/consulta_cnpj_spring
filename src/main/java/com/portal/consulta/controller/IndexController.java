@@ -43,11 +43,15 @@ public class IndexController {
                 mv.addObject("dados", p);
                 return mv;
             } else {
-                return new ModelAndView("index");
+                ModelAndView mv = new ModelAndView("index");
+                mv.addObject("erro", "Dados não encontrados");
+                return mv;
             }
         } catch (Exception ex) {
             ex.printStackTrace();
-            return new ModelAndView("index");
+            ModelAndView mv = new ModelAndView("index");
+            mv.addObject("erro", "Houve um erro no servidor! " + ex.getMessage());
+            return mv;
         }
     }
 
@@ -60,8 +64,9 @@ public class IndexController {
             mv.addObject("licitacao", l);
             return mv;
         } catch (Exception ex) {
-            Logger.getLogger(IndexController.class.getName()).log(Level.SEVERE, null, ex);
-            return new ModelAndView("index");
+            ModelAndView mv = new ModelAndView("index");
+            mv.addObject("erro", "Houve um erro no servidor! " + ex.getMessage());
+            return mv;
         }
     }
 
@@ -126,7 +131,7 @@ public class IndexController {
             String coluna_ordem = allParams.get("order[0][column]");
             String id = allParams.get("id_compra");
             String coluna = allParams.get("columns[" + coluna_ordem + "][data]");
-            String url = "http://www.portaltransparencia.gov.br/licitacoes/empenhos/resultado?paginacaoSimples=true&tamanhoPagina="+allParams.get("length")+"&offset="+allParams.get("start")+"&direcaoOrdenacao="+allParams.get("order[0][dir]")+"&colunaOrdenacao="+coluna+"&skCompra="+id;
+            String url = "http://www.portaltransparencia.gov.br/licitacoes/empenhos/resultado?paginacaoSimples=true&tamanhoPagina=" + allParams.get("length") + "&offset=" + allParams.get("start") + "&direcaoOrdenacao=" + allParams.get("order[0][dir]") + "&colunaOrdenacao=" + coluna + "&skCompra=" + id;
             Document doc = Jsoup.connect(url).userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36").timeout(60 * 1000).ignoreContentType(true).get();
             String json_resposta = doc.body().text();
             return json_resposta;
@@ -135,9 +140,9 @@ public class IndexController {
             return "{}";
         }
     }
-    
+
     @RequestMapping(value = "/licitacao/documento", method = RequestMethod.GET)
-    public ModelAndView documento_licitacao(@RequestParam("doc") String documento){
+    public ModelAndView documento_licitacao(@RequestParam("doc") String documento) {
         ModelAndView model = new ModelAndView("documento");
         DocumentoLicitacao doc = new DocumentoLicitacao(documento);
         try {
@@ -146,10 +151,12 @@ public class IndexController {
             return model;
         } catch (Exception ex) {
             Logger.getLogger(IndexController.class.getName()).log(Level.SEVERE, null, ex);
-            return new ModelAndView("index");
+            ModelAndView mv = new ModelAndView("index");
+            mv.addObject("erro", "Houve um erro no servidor! " + ex.getMessage());
+            return mv;
         }
     }
-    
+
     @RequestMapping(value = "/licitacao/documento/detalhamento", method = RequestMethod.GET)
     @ResponseBody
     public String documento_licitacao_detalhamento(@RequestParam Map<String, String> allParams) {
@@ -157,7 +164,7 @@ public class IndexController {
             String coluna_ordem = allParams.get("order[0][column]");
             String id = allParams.get("id");
             String coluna = allParams.get("columns[" + coluna_ordem + "][data]");
-            String url = "http://www.portaltransparencia.gov.br/despesas/documento/empenho/detalhamento/resultado?paginacaoSimples=true&tamanhoPagina="+allParams.get("length")+"&offset="+allParams.get("start")+"&direcaoOrdenacao="+allParams.get("order[0][dir]")+"&colunaOrdenacao="+coluna+"&codigo="+id;
+            String url = "http://www.portaltransparencia.gov.br/despesas/documento/empenho/detalhamento/resultado?paginacaoSimples=true&tamanhoPagina=" + allParams.get("length") + "&offset=" + allParams.get("start") + "&direcaoOrdenacao=" + allParams.get("order[0][dir]") + "&colunaOrdenacao=" + coluna + "&codigo=" + id;
 
             Document doc = Jsoup.connect(url).userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36").timeout(60 * 1000).ignoreContentType(true).get();
             String json_resposta = doc.body().text();
@@ -167,7 +174,7 @@ public class IndexController {
             return "{}";
         }
     }
-    
+
     @RequestMapping(value = "/licitacao/documento/relacionados", method = RequestMethod.GET)
     @ResponseBody
     public String documento_licitacao_relacionados(@RequestParam Map<String, String> allParams) {
@@ -175,7 +182,7 @@ public class IndexController {
             String coluna_ordem = allParams.get("order[0][column]");
             String id = allParams.get("id");
             String coluna = allParams.get("columns[" + coluna_ordem + "][data]");
-            String url = "http://www.portaltransparencia.gov.br/despesas/documento/documentos-relacionados/resultado?paginacaoSimples=true&tamanhoPagina="+allParams.get("length")+"&offset="+allParams.get("start")+"&direcaoOrdenacao="+allParams.get("order[0][dir]")+"&colunaOrdenacao="+coluna+"&fase=Empenho&codigo="+id;
+            String url = "http://www.portaltransparencia.gov.br/despesas/documento/documentos-relacionados/resultado?paginacaoSimples=true&tamanhoPagina=" + allParams.get("length") + "&offset=" + allParams.get("start") + "&direcaoOrdenacao=" + allParams.get("order[0][dir]") + "&colunaOrdenacao=" + coluna + "&fase=Empenho&codigo=" + id;
 
             Document doc = Jsoup.connect(url).userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36").timeout(60 * 1000).ignoreContentType(true).get();
             String json_resposta = doc.body().text();
